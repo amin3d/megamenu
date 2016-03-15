@@ -859,12 +859,17 @@ final class Mega_Menu_Style_Manager {
      * @since 1.3.1
      */
     public function head_css() {
+        $upload_dir = wp_upload_dir();
 
-        if ( $this->get_css_output_method() == 'head' ) {
+        $filename = $this->get_css_filename();
+
+        $filepath = trailingslashit( $upload_dir['basedir'] ) . 'maxmegamenu/' . $filename;
+
+        if ( ! is_file( $filepath ) ) {
 
             $css = $this->get_css();
-
-            echo '<style type="text/css">' . str_replace( array( "  ", "\n" ), '', $css ) . "</style>\n";
+			if($this->get_css_output_method()!='disabled')
+            	echo '<style type="text/css">' . str_replace( array( "  ", "\n" ), '', $css ) . "</style>\n";
 
         }
 
